@@ -6,28 +6,36 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button id="addPet" layoutX="517.0" layoutY="15.0" mnemonicParsing="false" text="Добавить" />
-      <Label layoutX="215.0" layoutY="70.0" text="Кличка" />
-      <Label id="selectedNickname" layoutX="407.0" layoutY="70.0" text="Label" />
-      <Label layoutX="34.0" layoutY="19.0" text="Мои питомцы" />
-      <Label layoutX="215.0" layoutY="94.0" text="Возраст" />
-      <Label id="selectedAge" layoutX="407.0" layoutY="94.0" text="Label" />
-      <Label layoutX="215.0" layoutY="121.0" text="Дата рождения" />
-      <Label id="selectedDate" layoutX="407.0" layoutY="121.0" text="Label" />
-      <Label layoutX="215.0" layoutY="153.0" text="Календарь прививок" />
-      <TableView layoutX="14.0" layoutY="47.0" prefHeight="328.0" prefWidth="138.0">
-        <columns>
-            <TableColumn id="petList" prefWidth="137.0" text="Список" />
-        </columns>
-      </TableView>
-      <TableView layoutX="173.0" layoutY="180.0" prefHeight="195.0" prefWidth="408.0">
-         <columns>
-            <TableColumn id="dateColumn" prefWidth="119.0" text="Дата" />
-            <TableColumn id="typeColumn" prefWidth="139.0" text="Тип" />
-            <TableColumn id="drugNameColumn" prefWidth="149.0" text="Название лекарства" />
-         </columns>
-      </TableView>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.company.javapractice8.PetsController">
+   <Label layoutX="34.0" layoutY="19.0" text="Мои питомцы"/>
+
+   <Button layoutX="517.0" layoutY="15.0" mnemonicParsing="false" onAction="#addPet" text="Добавить"/>
+
+   <Label layoutX="215.0" layoutY="70.0" text="Кличка"/>
+   <Label fx:id="selectedNickname" layoutX="407.0" layoutY="70.0" text="Label"/>
+
+   <Label layoutX="215.0" layoutY="94.0" text="Возраст"/>
+   <Label fx:id="selectedAge" layoutX="407.0" layoutY="94.0" text="Label"/>
+
+   <Label layoutX="215.0" layoutY="121.0" text="Дата рождения"/>
+   <Label fx:id="selectedDate" layoutX="407.0" layoutY="121.0" text="Label"/>
+
+   <TableView fx:id="petListView" layoutX="14.0" layoutY="47.0" prefHeight="328.0" prefWidth="138.0">
+      <columns>
+         <TableColumn fx:id="petList" prefWidth="137.0" text="Список"/>
+      </columns>
+   </TableView>
+
+   <Label layoutX="215.0" layoutY="153.0" text="Календарь прививок"/>
+   <TableView fx:id="selectedPetVaccinationListView" layoutX="173.0" layoutY="180.0" prefHeight="195.0"
+              prefWidth="408.0">
+      <columns>
+         <TableColumn fx:id="dateColumn" prefWidth="119.0" text="Дата"/>
+         <TableColumn fx:id="typeColumn" prefWidth="139.0" text="Тип"/>
+         <TableColumn fx:id="drugNameColumn" prefWidth="149.0" text="Название лекарства"/>
+      </columns>
+   </TableView>
+
 </AnchorPane>

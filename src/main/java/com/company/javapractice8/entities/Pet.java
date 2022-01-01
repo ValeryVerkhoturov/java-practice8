@@ -10,8 +10,6 @@ public class Pet {
 
     String nickname;
 
-    int age;
-
     String kind;
 
     Date birthdate;

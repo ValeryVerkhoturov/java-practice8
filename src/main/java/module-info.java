@@ -1,7 +1,7 @@
 module com.company.javapractice8 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires lombok;
+    requires static lombok;
 
 
     opens com.company.javapractice8 to javafx.fxml;
