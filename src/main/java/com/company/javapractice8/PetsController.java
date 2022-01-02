@@ -1,51 +1,48 @@
 package com.company.javapractice8;
 
+import com.company.javapractice8.entities.NullPet;
 import com.company.javapractice8.entities.Pet;
 import com.company.javapractice8.entities.Vaccination;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.FlowPane;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PetsController {
 
     final ObservableList<Pet> pets = FXCollections.observableArrayList();
-
-    @FXML
-    TextField selectedNickname;
-
-    @FXML
-    TextField selectedAge;
-
-    @FXML
-    TextField selectedDate;
-
     @FXML
     TableView<Pet> petListView;
-
     @FXML
     TableColumn<Pet, String> petList;
-
+    @FXML
+    TextField selectedNickname;
+    @FXML
+    TextField selectedKind;
+    @FXML
+    DatePicker selectedPetBirthdate;
+    @FXML
+    TextField vaccinationType;
+    @FXML
+    DatePicker vaccinationDate;
+    @FXML
+    TextField vaccinationDrugName;
+    @FXML
+    FlowPane vaccinations;
     @FXML
     TableView<Vaccination> selectedPetVaccinationListView;
-
     @FXML
     TableColumn<Vaccination, Date> vaccinationDateColumn;
-
     @FXML
     TableColumn<Vaccination, String> vaccinationTypeColumn;
-
     @FXML
     TableColumn<Vaccination, String> vaccinationDrugNameColumn;
 
@@ -61,8 +58,19 @@ public class PetsController {
     }
 
     @FXML
-    protected void addPet() {
-        Vaccination vaccination = new Vaccination(new Date(234512), "wefr", "sdfg");
-        pets.add(new Pet("wdfegnh", "sdfg", new Date(12345432), List.of(vaccination)));
+    private void createNewPet(ActionEvent actionEvent) {
+        pets.add(new NullPet());
+    }
+
+    @FXML
+    private void savePet(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void addVaccination(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void submitVaccination(ActionEvent actionEvent) {
     }
 }
