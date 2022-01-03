@@ -8,22 +8,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.StringConverter;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PetsController {
 
     final ObservableList<Pet> pets = FXCollections.observableArrayList();
+
+    final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @FXML
     TableView<Pet> petListView;
@@ -44,7 +46,7 @@ public class PetsController {
     @FXML
     TableView<Vaccination> selectedPetVaccinationListView;
     @FXML
-    TableColumn<Vaccination, Date> vaccinationDateColumn;
+    TableColumn<Vaccination, LocalDate> vaccinationDateColumn;
     @FXML
     TableColumn<Vaccination, String> vaccinationTypeColumn;
     @FXML
@@ -62,14 +64,17 @@ public class PetsController {
 
         savePetOnEnterPressed();
         saveVaccinationOnEnterPressed();
+
+        setDatePickerConverters();
+        setCellFactoryForTablesWithDates();
     }
 
-    private Pet getSelectedPet() {
-        return petListView.getSelectionModel().getSelectedItem();
+    private Optional<Pet> getSelectedPet() {
+        return Optional.ofNullable(petListView.getSelectionModel().getSelectedItem());
     }
 
-    private Vaccination getSelectedVaccination() {
-        return selectedPetVaccinationListView.getSelectionModel().getSelectedItem();
+    private Optional<Vaccination> getSelectedVaccination() {
+        return Optional.ofNullable(selectedPetVaccinationListView.getSelectionModel().getSelectedItem());
     }
 
     private void setPetListViewCellsValue() {
@@ -130,6 +135,39 @@ public class PetsController {
         vaccinationDrugName.setOnKeyPressed(eventHandler);
     }
 
+    private void setDatePickerConverters() {
+        StringConverter<LocalDate> stringConverter = new StringConverter<>() {
+            @Override
+            public String toString(LocalDate localDate) {
+                if (localDate != null)
+                    return dateTimeFormatter.format(localDate);
+                return "";
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty())
+                    return LocalDate.parse(string, dateTimeFormatter);
+                return null;
+            }
+        };
+
+        selectedPetBirthdate.setConverter(stringConverter);
+        vaccinationDate.setConverter(stringConverter);
+    }
+
+    private void setCellFactoryForTablesWithDates() {
+        vaccinationDateColumn.setCellFactory(vaccinationDateTableColumn -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDate localDate, boolean empty) {
+                super.updateItem(localDate, empty);
+                if (empty)
+                    setText(null);
+                else
+                    setText(dateTimeFormatter.format(localDate));
+            }
+        });
+    }
+
     @FXML
     private void createNewPet() {
         pets.add(new NullPet());
@@ -137,55 +175,41 @@ public class PetsController {
 
     @FXML
     private void savePet() {
-        Pet selectedPet = getSelectedPet();
-        if (selectedPet == null)
-            return;
+        getSelectedPet().ifPresent(pet -> {
+            pet.setNickname(selectedNickname.getText());
+            pet.setKind(selectedKind.getText());
+            pet.setBirthdate(selectedPetBirthdate.getValue());
 
-        selectedPet.setNickname(selectedNickname.getText());
-        selectedPet.setKind(selectedKind.getText());
-        selectedPet.setBirthdate(selectedPetBirthdate.getValue());
-
-        petListView.refresh();
+            petListView.refresh();
+        });
     }
 
     public void removeSelectedPet() {
-        Pet selectedPet = getSelectedPet();
-        if (selectedPet == null)
-            return;
-
-        pets.remove(selectedPet);
-
-        selectedPetVaccinationListView.refresh();
+        getSelectedPet().ifPresent(pet -> {
+            pets.remove(pet);
+            selectedPetVaccinationListView.refresh();
+        });
     }
 
     @FXML
     private void addVaccination() {
-        Pet selectedPet = getSelectedPet();
-        if (selectedPet == null)
-            return;
-
-        selectedPet.getVaccinationList().add(new NullVaccination());
+        getSelectedPet().ifPresent(pet -> pet.getVaccinationList().add(new NullVaccination()));
     }
 
     @FXML
     private void submitVaccination() {
-        Vaccination selectedVaccination = getSelectedVaccination();
-        if (selectedVaccination == null)
-            return;
+        getSelectedVaccination().ifPresent(vaccination -> {
+            vaccination.setType(vaccinationType.getText());
+            vaccination.setDate(vaccinationDate.getValue());
+            vaccination.setDrugName(vaccinationDrugName.getText());
 
-        selectedVaccination.setType(vaccinationType.getText());
-        selectedVaccination.setDate(vaccinationDate.getValue());
-        selectedVaccination.setDrugName(vaccinationDrugName.getText());
-
-        selectedPetVaccinationListView.refresh();
+            selectedPetVaccinationListView.refresh();
+        });
     }
 
     public void removeVaccination() {
-        Pet selectedPet = getSelectedPet();
-        Vaccination selectedVaccination = getSelectedVaccination();
-        if (selectedPet == null || selectedVaccination == null)
-            return;
-
-        selectedPet.getVaccinationList().remove(selectedVaccination);
+        getSelectedPet().ifPresent(
+                pet -> getSelectedVaccination().ifPresent(
+                        vaccination -> pet.getVaccinationList().remove(vaccination)));
     }
 }
