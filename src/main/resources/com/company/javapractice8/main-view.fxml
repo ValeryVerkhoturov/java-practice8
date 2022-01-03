@@ -42,13 +42,14 @@
                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </TilePane.margin>
          </TextField>
-         <Button mnemonicParsing="false" text="emptyPlug" visible="false">
-            <padding>
-               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-            </padding>
+
+         <Button mnemonicParsing="false" onAction="#createNewPet" prefHeight="29.0" prefWidth="170.0" text="Создать нового питомца">
             <TilePane.margin>
                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </TilePane.margin>
+            <padding>
+               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
          </Button>
 
          <Label text="Тип">
@@ -65,13 +66,13 @@
             </TilePane.margin>
          </TextField>
 
-         <Button mnemonicParsing="false" onAction="#createNewPet" prefHeight="29.0" prefWidth="170.0" text="Создать нового питомца">
-            <TilePane.margin>
-               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-            </TilePane.margin>
+         <Button mnemonicParsing="false" onAction="#savePet" prefHeight="29.0" prefWidth="170.0" text="Сохранить питомца">
             <padding>
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
+            <TilePane.margin>
+               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </TilePane.margin>
          </Button>
 
          <Label text="Дата рождения">
@@ -87,14 +88,10 @@
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
          </DatePicker>
-
-         <Button mnemonicParsing="false" onAction="#savePet" prefHeight="29.0" prefWidth="170.0" text="Сохранить питомца">
+         <Button mnemonicParsing="false" onAction="#removeSelectedPet" prefHeight="29.0" prefWidth="170.0" text="Удалить питомца">
             <padding>
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
-            <TilePane.margin>
-               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-            </TilePane.margin>
          </Button>
 
          <Label text="Тип прививки">
@@ -110,7 +107,8 @@
                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </TilePane.margin>
          </TextField>
-         <Button mnemonicParsing="false" text="emptyPlug" visible="false">
+
+         <Button mnemonicParsing="false" onAction="#addVaccination" prefHeight="29.0" prefWidth="170.0" text="Добавить новую прививку">
             <padding>
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
@@ -133,7 +131,7 @@
             </TilePane.margin>
          </DatePicker>
 
-         <Button mnemonicParsing="false" onAction="#addVaccination" prefHeight="29.0" prefWidth="170.0" text="Добавить новую прививку">
+         <Button mnemonicParsing="false" onAction="#submitVaccination" prefHeight="29.0" prefWidth="170.0" text="Подтвердить прививку">
             <padding>
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
@@ -155,14 +153,10 @@
                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </TilePane.margin>
          </TextField>
-
-         <Button mnemonicParsing="false" onAction="#submitVaccination" prefHeight="29.0" prefWidth="170.0" text="Подтвердить прививку">
+         <Button mnemonicParsing="false" onAction="#removeVaccination" prefHeight="29.0" prefWidth="170.0" text="Удалить прививку">
             <padding>
                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
-            <TilePane.margin>
-               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-            </TilePane.margin>
          </Button>
       </TilePane>
       <FlowPane fx:id="vaccinations" alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="174.0" prefWidth="519.0">

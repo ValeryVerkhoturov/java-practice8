@@ -61,6 +61,14 @@ public class PetsController {
         addSelectedPetVaccinationListViewListener();
     }
 
+    private Pet getSelectedPet() {
+        return petListView.getSelectionModel().getSelectedItem();
+    }
+
+    private Vaccination getSelectedVaccination() {
+        return selectedPetVaccinationListView.getSelectionModel().getSelectedItem();
+    }
+
     private void setPetListViewCellsValue() {
         petList.setCellValueFactory(new PropertyValueFactory<>(Pet.Fields.nickname));
     }
@@ -73,6 +81,9 @@ public class PetsController {
 
     private void addPetListViewListener() {
         petListView.getSelectionModel().selectedItemProperty().addListener((observableValue, pet, t1) -> {
+            if (t1 == null)
+                return;
+
             selectedNickname.setText(t1.getNickname());
             selectedKind.setText(t1.getKind());
             selectedPetBirthdate.setValue(t1.getBirthdate());
@@ -99,18 +110,30 @@ public class PetsController {
 
     @FXML
     private void savePet(ActionEvent actionEvent) {
-        Pet selectedPet = petListView.getSelectionModel().getSelectedItem();
+        Pet selectedPet = getSelectedPet();
         if (selectedPet == null)
             return;
 
         selectedPet.setNickname(selectedNickname.getText());
         selectedPet.setKind(selectedKind.getText());
         selectedPet.setBirthdate(selectedPetBirthdate.getValue());
+
+        petListView.refresh();
+    }
+
+    public void removeSelectedPet(ActionEvent actionEvent) {
+        Pet selectedPet = getSelectedPet();
+        if (selectedPet == null)
+            return;
+
+        pets.remove(selectedPet);
+
+        selectedPetVaccinationListView.refresh();
     }
 
     @FXML
     private void addVaccination(ActionEvent actionEvent) {
-        Pet selectedPet = petListView.getSelectionModel().getSelectedItem();
+        Pet selectedPet = getSelectedPet();
         if (selectedPet == null)
             return;
 
@@ -119,12 +142,23 @@ public class PetsController {
 
     @FXML
     private void submitVaccination(ActionEvent actionEvent) {
-        Vaccination selectedVaccination = selectedPetVaccinationListView.getSelectionModel().getSelectedItem();
+        Vaccination selectedVaccination = getSelectedVaccination();
         if (selectedVaccination == null)
             return;
 
         selectedVaccination.setType(vaccinationType.getText());
         selectedVaccination.setDate(vaccinationDate.getValue());
         selectedVaccination.setDrugName(vaccinationDrugName.getText());
+
+        selectedPetVaccinationListView.refresh();
+    }
+
+    public void removeVaccination(ActionEvent actionEvent) {
+        Pet selectedPet = getSelectedPet();
+        Vaccination selectedVaccination = getSelectedVaccination();
+        if (selectedPet == null || selectedVaccination == null)
+            return;
+
+        selectedPet.getVaccinationList().remove(selectedVaccination);
     }
 }
