@@ -3,12 +3,9 @@ package com.company.javapractice8.entities;
 import javafx.collections.ObservableList;
 import lombok.Data;
 import lombok.NonNull;
-import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @FieldNameConstants

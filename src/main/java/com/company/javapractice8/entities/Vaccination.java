@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @FieldNameConstants
