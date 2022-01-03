@@ -21,8 +21,8 @@ public class PetDTO implements Pet, Serializable {
     public static PetDTO to(PetImplementation pet) {
         return new PetDTO(pet.getNickname(),
                 pet.getKind(),
-                pet.birthdate,
-                pet.vaccinationList.stream().toList());
+                pet.getBirthdate(),
+                pet.getVaccinationList().stream().toList());
     }
 
     public static PetImplementation from(PetDTO petDTO) {

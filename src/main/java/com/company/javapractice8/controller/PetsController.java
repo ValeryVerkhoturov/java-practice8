@@ -175,7 +175,7 @@ public class PetsController {
 
     @FXML
     private void createNewPet() {
-        pets.add(new NullPetImplementation());
+        pets.add(new NullPetImplementation(pets.size()));
     }
 
     @FXML
@@ -199,7 +199,10 @@ public class PetsController {
 
     @FXML
     private void addVaccination() {
-        getSelectedPet().ifPresent(pet -> pet.getVaccinationList().add(new NullVaccination()));
+        getSelectedPet().ifPresent(pet -> {
+            List<Vaccination> vaccinationList = pet.getVaccinationList();
+            vaccinationList.add(new NullVaccination(vaccinationList.size()));
+        });
     }
 
     @FXML
@@ -236,7 +239,7 @@ public class PetsController {
 
     @SneakyThrows
     private void writeSaveFile() {
-        if (!saveFile.delete() || !saveFile.createNewFile())
+        if (!saveFile.delete() && !saveFile.createNewFile())
             return;
 
         @Cleanup ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(saveFile, false));
