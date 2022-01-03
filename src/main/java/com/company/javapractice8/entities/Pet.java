@@ -1,13 +1,17 @@
 package com.company.javapractice8.entities;
 
+import javafx.collections.ObservableList;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.Value;
+import lombok.experimental.FieldNameConstants;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Data
+@FieldNameConstants
 public class Pet {
 
     @NonNull
@@ -17,8 +21,8 @@ public class Pet {
     String kind;
 
     @NonNull
-    Date birthdate;
+    LocalDate birthdate;
 
     @NonNull
-    List<Vaccination> vaccinationList;
+    ObservableList<Vaccination> vaccinationList;
 }
