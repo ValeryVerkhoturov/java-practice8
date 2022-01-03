@@ -7,12 +7,15 @@ import com.company.javapractice8.entities.Vaccination;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -60,6 +63,9 @@ public class PetsController {
 
         addPetListViewListener();
         addSelectedPetVaccinationListViewListener();
+
+        savePetOnEnterPressed();
+        saveVaccinationOnEnterPressed();
     }
 
     private Pet getSelectedPet() {
@@ -104,13 +110,35 @@ public class PetsController {
         });
     }
 
+    private void savePetOnEnterPressed() {
+        EventHandler<KeyEvent> eventHandler = keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER))
+                savePet();
+        };
+
+        selectedNickname.setOnKeyPressed(eventHandler);
+        selectedKind.setOnKeyPressed(eventHandler);
+        selectedPetBirthdate.setOnKeyPressed(eventHandler);
+    }
+
+    private void saveVaccinationOnEnterPressed() {
+        EventHandler<KeyEvent> eventHandler = keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER))
+                submitVaccination();
+        };
+
+        vaccinationType.setOnKeyPressed(eventHandler);
+        vaccinationDate.setOnKeyPressed(eventHandler);
+        vaccinationDrugName.setOnKeyPressed(eventHandler);
+    }
+
     @FXML
-    private void createNewPet(ActionEvent actionEvent) {
+    private void createNewPet() {
         pets.add(new NullPet());
     }
 
     @FXML
-    private void savePet(ActionEvent actionEvent) {
+    private void savePet() {
         Pet selectedPet = getSelectedPet();
         if (selectedPet == null)
             return;
@@ -122,7 +150,7 @@ public class PetsController {
         petListView.refresh();
     }
 
-    public void removeSelectedPet(ActionEvent actionEvent) {
+    public void removeSelectedPet() {
         Pet selectedPet = getSelectedPet();
         if (selectedPet == null)
             return;
@@ -133,7 +161,7 @@ public class PetsController {
     }
 
     @FXML
-    private void addVaccination(ActionEvent actionEvent) {
+    private void addVaccination() {
         Pet selectedPet = getSelectedPet();
         if (selectedPet == null)
             return;
@@ -142,7 +170,7 @@ public class PetsController {
     }
 
     @FXML
-    private void submitVaccination(ActionEvent actionEvent) {
+    private void submitVaccination() {
         Vaccination selectedVaccination = getSelectedVaccination();
         if (selectedVaccination == null)
             return;
@@ -154,7 +182,7 @@ public class PetsController {
         selectedPetVaccinationListView.refresh();
     }
 
-    public void removeVaccination(ActionEvent actionEvent) {
+    public void removeVaccination() {
         Pet selectedPet = getSelectedPet();
         Vaccination selectedVaccination = getSelectedVaccination();
         if (selectedPet == null || selectedVaccination == null)
