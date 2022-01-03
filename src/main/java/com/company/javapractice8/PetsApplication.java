@@ -3,9 +3,13 @@ package com.company.javapractice8;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class PetsApplication extends Application {
 
@@ -15,6 +19,7 @@ public class PetsApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Practice8");
         stage.setScene(scene);
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("applicationIcon.png"))));
         stage.show();
     }
 
