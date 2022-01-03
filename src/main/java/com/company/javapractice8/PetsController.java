@@ -6,7 +6,6 @@ import com.company.javapractice8.entities.Pet;
 import com.company.javapractice8.entities.Vaccination;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -16,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -43,8 +41,6 @@ public class PetsController {
     DatePicker vaccinationDate;
     @FXML
     TextField vaccinationDrugName;
-    @FXML
-    FlowPane vaccinations;
     @FXML
     TableView<Vaccination> selectedPetVaccinationListView;
     @FXML
@@ -88,8 +84,10 @@ public class PetsController {
 
     private void addPetListViewListener() {
         petListView.getSelectionModel().selectedItemProperty().addListener((observableValue, pet, t1) -> {
-            if (t1 == null)
+            if (t1 == null) {
+                selectedPetVaccinationListView.setItems(FXCollections.observableArrayList());
                 return;
+            }
 
             selectedNickname.setText(t1.getNickname());
             selectedKind.setText(t1.getKind());

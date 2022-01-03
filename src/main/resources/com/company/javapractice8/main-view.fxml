@@ -159,7 +159,7 @@
             </padding>
          </Button>
       </TilePane>
-      <FlowPane fx:id="vaccinations" alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="174.0" prefWidth="519.0">
+      <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="174.0" prefWidth="519.0">
          <Label text="Календарь прививок">
             <padding>
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
