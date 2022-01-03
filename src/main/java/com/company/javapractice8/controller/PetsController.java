@@ -1,9 +1,6 @@
-package com.company.javapractice8;
+package com.company.javapractice8.controller;
 
-import com.company.javapractice8.entities.NullPet;
-import com.company.javapractice8.entities.NullVaccination;
-import com.company.javapractice8.entities.Pet;
-import com.company.javapractice8.entities.Vaccination;
+import com.company.javapractice8.entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -14,18 +11,24 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 import lombok.AccessLevel;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PetsController {
 
-    final ObservableList<Pet> pets = FXCollections.observableArrayList();
+    ObservableList<Pet> pets;
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    final File saveFile = new File("src/main/resources/com/company/javapractice8/save/save.obj");
 
     @FXML
     TableView<Pet> petListView;
@@ -54,6 +57,8 @@ public class PetsController {
 
     @FXML
     private void initialize() {
+        pets = FXCollections.observableArrayList(readSaveFile());
+
         setPetListViewCellsValue();
         setSelectedPetVaccinationListViewCellsValue();
 
@@ -184,6 +189,7 @@ public class PetsController {
         });
     }
 
+    @FXML
     public void removeSelectedPet() {
         getSelectedPet().ifPresent(pet -> {
             pets.remove(pet);
@@ -207,9 +213,34 @@ public class PetsController {
         });
     }
 
+    @FXML
     public void removeVaccination() {
         getSelectedPet().ifPresent(
                 pet -> getSelectedVaccination().ifPresent(
                         vaccination -> pet.getVaccinationList().remove(vaccination)));
+    }
+
+    public void shutdown() {
+        writeSaveFile();
+    }
+
+    @SneakyThrows
+    private List<Pet> readSaveFile() {
+        List<Pet> pets = null;
+        if (saveFile.exists()) {
+            @Cleanup ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(saveFile));
+            pets = ((List<PetDTO>) objectInputStream.readObject()).stream().map(PetDTO::from).toList();
+        }
+        return pets != null ? pets : List.of();
+    }
+
+    @SneakyThrows
+    private void writeSaveFile() {
+        saveFile.delete();
+        if (!saveFile.createNewFile())
+            return;
+
+        @Cleanup ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(saveFile, false));
+        objectOutputStream.writeObject(pets.stream().map(PetDTO::to).toList());
     }
 }

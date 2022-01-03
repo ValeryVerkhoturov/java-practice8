@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.TilePane?>
 
-<FlowPane prefHeight="491.0" prefWidth="942.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.javapractice8.PetsController">
+<FlowPane prefHeight="491.0" prefWidth="942.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.javapractice8.controller.PetsController">
    <FlowPane alignment="CENTER" orientation="VERTICAL">
       <Label text="Мои питомцы">
          <padding>

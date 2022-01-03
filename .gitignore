@@ -1,2 +1,3 @@
 # Project exclude paths
 /target/
+/src/main/resources/com/company/javapractice8/save/save.obj
