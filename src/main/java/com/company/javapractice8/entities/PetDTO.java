@@ -1,7 +1,6 @@
 package com.company.javapractice8.entities;
 
 import javafx.collections.FXCollections;
-import lombok.NonNull;
 import lombok.Value;
 
 import java.io.Serializable;
