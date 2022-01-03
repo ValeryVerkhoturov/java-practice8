@@ -1,25 +1,15 @@
 package com.company.javapractice8.entities;
 
-import javafx.collections.ObservableList;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.experimental.FieldNameConstants;
-
 import java.time.LocalDate;
+import java.util.List;
 
-@Data
-@FieldNameConstants
-public class Pet {
+public interface Pet {
 
-    @NonNull
-    String nickname;
+    String getNickname();
 
-    @NonNull
-    String kind;
+    String getKind();
 
-    @NonNull
-    LocalDate birthdate;
+    LocalDate getBirthdate();
 
-    @NonNull
-    ObservableList<Vaccination> vaccinationList;
+    List<Vaccination> getVaccinationList();
 }

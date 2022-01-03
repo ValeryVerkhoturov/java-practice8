@@ -24,16 +24,16 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PetsController {
 
-    ObservableList<Pet> pets;
+    ObservableList<PetImplementation> pets;
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     final File saveFile = new File("src/main/resources/com/company/javapractice8/save/save.obj");
 
     @FXML
-    TableView<Pet> petListView;
+    TableView<PetImplementation> petListView;
     @FXML
-    TableColumn<Pet, String> petList;
+    TableColumn<PetImplementation, String> petList;
     @FXML
     TextField selectedNickname;
     @FXML
@@ -74,7 +74,7 @@ public class PetsController {
         setCellFactoryForTablesWithDates();
     }
 
-    private Optional<Pet> getSelectedPet() {
+    private Optional<PetImplementation> getSelectedPet() {
         return Optional.ofNullable(petListView.getSelectionModel().getSelectedItem());
     }
 
@@ -83,7 +83,7 @@ public class PetsController {
     }
 
     private void setPetListViewCellsValue() {
-        petList.setCellValueFactory(new PropertyValueFactory<>(Pet.Fields.nickname));
+        petList.setCellValueFactory(new PropertyValueFactory<>(PetImplementation.Fields.nickname));
     }
 
     private void setSelectedPetVaccinationListViewCellsValue() {
@@ -175,7 +175,7 @@ public class PetsController {
 
     @FXML
     private void createNewPet() {
-        pets.add(new NullPet());
+        pets.add(new NullPetImplementation());
     }
 
     @FXML
@@ -225,8 +225,8 @@ public class PetsController {
     }
 
     @SneakyThrows
-    private List<Pet> readSaveFile() {
-        List<Pet> pets = null;
+    private List<PetImplementation> readSaveFile() {
+        List<PetImplementation> pets = null;
         if (saveFile.exists()) {
             @Cleanup ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(saveFile));
             pets = ((List<PetDTO>) objectInputStream.readObject()).stream().map(PetDTO::from).toList();
@@ -236,8 +236,7 @@ public class PetsController {
 
     @SneakyThrows
     private void writeSaveFile() {
-        saveFile.delete();
-        if (!saveFile.createNewFile())
+        if (!saveFile.delete() || !saveFile.createNewFile())
             return;
 
         @Cleanup ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(saveFile, false));

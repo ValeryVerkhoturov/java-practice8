@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Value
-public class PetDTO implements Serializable {
+public class PetDTO implements Pet, Serializable {
 
     String nickname;
 
@@ -18,15 +18,15 @@ public class PetDTO implements Serializable {
 
     List<Vaccination> vaccinationList;
 
-    public static PetDTO to(Pet pet) {
+    public static PetDTO to(PetImplementation pet) {
         return new PetDTO(pet.getNickname(),
                 pet.getKind(),
                 pet.birthdate,
                 pet.vaccinationList.stream().toList());
     }
 
-    public static Pet from(PetDTO petDTO) {
-        return new Pet(petDTO.getNickname(),
+    public static PetImplementation from(PetDTO petDTO) {
+        return new PetImplementation(petDTO.getNickname(),
                 petDTO.getKind(),
                 petDTO.getBirthdate(),
                 FXCollections.observableArrayList(petDTO.vaccinationList));
