@@ -184,6 +184,7 @@ public class PetsController {
     @FXML
     private void createNewPet() {
         pets.add(new NullPetImplementation(pets.stream().map(PetImplementation::getNickname).toList()));
+        petListView.getSelectionModel().select(pets.size() - 1);
     }
 
     @FXML
@@ -210,6 +211,7 @@ public class PetsController {
         getSelectedPet().ifPresent(pet -> {
             List<Vaccination> vaccinationList = pet.getVaccinationList();
             vaccinationList.add(new NullVaccination(vaccinationList.stream().map(Vaccination::getDrugName).toList()));
+            selectedPetVaccinationListView.getSelectionModel().select(vaccinationList.size() - 1);
         });
     }
 

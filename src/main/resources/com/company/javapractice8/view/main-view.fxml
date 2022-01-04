@@ -19,7 +19,10 @@
       </Label>
 
       <TableView fx:id="petListView" prefHeight="395.0" prefWidth="200.0">
-         <columns>
+         <placeholder>
+             <Button mnemonicParsing="false" onAction="#createNewPet" text="Новый питомец" />
+         </placeholder>
+          <columns>
             <TableColumn fx:id="petList" minWidth="-1.0" prefWidth="218.0" text="Список" />
          </columns>
          <columnResizePolicy>
@@ -166,6 +169,9 @@
             </padding>
          </Label>
          <TableView fx:id="selectedPetVaccinationListView" prefHeight="184.0" prefWidth="592.0">
+             <placeholder>
+                <Button mnemonicParsing="false" onAction="#addVaccination" text="Добавить новую прививку" />
+             </placeholder>
             <columns>
                <TableColumn fx:id="vaccinationDateColumn" text="Дата" />
                <TableColumn fx:id="vaccinationTypeColumn" text="Тип" />
