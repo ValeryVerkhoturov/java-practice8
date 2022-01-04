@@ -175,7 +175,7 @@ public class PetsController {
 
     @FXML
     private void createNewPet() {
-        pets.add(new NullPetImplementation(pets.size()));
+        pets.add(new NullPetImplementation(pets.stream().map(PetImplementation::getNickname).toList()));
     }
 
     @FXML
@@ -190,7 +190,7 @@ public class PetsController {
     }
 
     @FXML
-    public void removeSelectedPet() {
+    private void removeSelectedPet() {
         getSelectedPet().ifPresent(pet -> {
             pets.remove(pet);
             selectedPetVaccinationListView.refresh();
@@ -201,7 +201,7 @@ public class PetsController {
     private void addVaccination() {
         getSelectedPet().ifPresent(pet -> {
             List<Vaccination> vaccinationList = pet.getVaccinationList();
-            vaccinationList.add(new NullVaccination(vaccinationList.size()));
+            vaccinationList.add(new NullVaccination(vaccinationList.stream().map(Vaccination::getDrugName).toList()));
         });
     }
 
@@ -217,7 +217,7 @@ public class PetsController {
     }
 
     @FXML
-    public void removeVaccination() {
+    private void removeVaccination() {
         getSelectedPet().ifPresent(
                 pet -> getSelectedVaccination().ifPresent(
                         vaccination -> pet.getVaccinationList().remove(vaccination)));
@@ -227,6 +227,7 @@ public class PetsController {
         writeSaveFile();
     }
 
+//    @SuppressWarnings("unchecked")
     @SneakyThrows
     private List<PetImplementation> readSaveFile() {
         List<PetImplementation> pets = null;

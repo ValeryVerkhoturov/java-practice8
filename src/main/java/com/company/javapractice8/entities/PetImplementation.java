@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @FieldNameConstants
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PetImplementation implements Pet{
+public class PetImplementation implements Pet {
 
     @NonNull
     String nickname;
