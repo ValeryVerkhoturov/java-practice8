@@ -28,7 +28,9 @@ public class PetsController {
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    final File saveFile = new File("src/main/resources/com/company/javapractice8/save/save.obj");
+    final String pathToSaveFile = "src/main/resources/com/company/javapractice8/save/";
+    final String saveFileName = "save.obj";
+    final File saveFile = new File(pathToSaveFile + saveFileName);
 
     @FXML
     TableView<PetImplementation> petListView;
@@ -246,7 +248,8 @@ public class PetsController {
 
     @SneakyThrows
     private void writeSaveFile() {
-        if (!saveFile.delete() && !saveFile.createNewFile())
+        File saveFolder = new File(pathToSaveFile);
+        if (!saveFile.delete() && !saveFolder.mkdirs() && !saveFile.createNewFile())
             return;
 
         @Cleanup ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(saveFile, false));
