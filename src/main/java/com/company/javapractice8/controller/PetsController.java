@@ -95,6 +95,9 @@ public class PetsController {
     private void addPetListViewListener() {
         petListView.getSelectionModel().selectedItemProperty().addListener((observableValue, pet, t1) -> {
             if (t1 == null) {
+                selectedNickname.setText("");
+                selectedKind.setText("");
+                selectedPetBirthdate.setValue(null);
                 selectedPetVaccinationListView.setItems(FXCollections.observableArrayList());
                 return;
             }
@@ -102,15 +105,18 @@ public class PetsController {
             selectedNickname.setText(t1.getNickname());
             selectedKind.setText(t1.getKind());
             selectedPetBirthdate.setValue(t1.getBirthdate());
-
             selectedPetVaccinationListView.setItems(t1.getVaccinationList());
         });
     }
 
     private void addSelectedPetVaccinationListViewListener() {
         selectedPetVaccinationListView.getSelectionModel().selectedItemProperty().addListener((observableValue, pet, t1) -> {
-            if (t1 == null)
+            if (t1 == null) {
+                vaccinationType.setText("");
+                vaccinationDate.setValue(null);
+                vaccinationDrugName.setText("");
                 return;
+            }
 
             vaccinationType.setText(t1.getType());
             vaccinationDate.setValue(t1.getDate());
