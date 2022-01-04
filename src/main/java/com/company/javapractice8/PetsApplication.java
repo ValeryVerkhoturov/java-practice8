@@ -21,6 +21,7 @@ public class PetsApplication extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("pictures/applicationIcon.png"))));
         stage.setOnHidden(windowEvent -> petsController.shutdown());
+        stage.setResizable(false);
         stage.show();
     }
 
